@@ -1,0 +1,75 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <script src="https://cdn.jsdelivr.net/npm/@tailwindcss/browser@4"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+</head>
+<body class="font-sans bg-slate-800">
+    <div id="balance" class="grid grid-cols-1 gap-4 p-4 px-50">
+        
+        <!-- EXPENSE -->
+        <div>
+            <h2 class="font-bold text-center text-slate-100 bg-slate-700 p-4 rounded-md shadow-md">Expense & Budget Visualizer</h2>
+        </div>
+
+        <!-- TOTAL BALANCE -->
+        <div class="shadow-md rounded-md mt-5 p-5 bg-slate-700">
+            <p class="text-sm text-slate-200 font-medium text-center">TOTAL BALANCE</p>
+            <p id="total_balance" class="text-[36px] text-slate-200 p-2 font-bold text-center"></p>
+        </div>
+
+        <!-- TRANSACTION FORM -->
+        <div class="shadow-md rounded-md mt-5 bg-slate-700">
+            <form id="transaction_form" class="p-4">
+                <p class="text-left font-bold text-lg text-slate-100">Add Transaction</p>
+                <div class="mt-3">
+                    <label for="item_name_txt" class="text-slate-200">Item Name</label><br>
+                    <input id="item_name_txt" class="text-slate-800 w-full mt-2 bg-slate-100 rounded-md p-2" type="text" required>
+                </div>
+                
+                <div class="mt-3">
+                    <label for="amount_txt" class="text-slate-200">Amount</label><br>
+                    <input id="amount_txt" class="text-slate-800 w-full mt-2 bg-slate-100 rounded-md p-2" type="number" step="any" required>
+                </div>
+
+                <div class="mt-3">
+                    <label for="category_select" class="text-slate-200">Category</label><br>
+                    <select name="category_select" id="category_select" class="text-slate-800 w-full mt-2 mb-10 bg-slate-100 rounded-md p-2" required>
+                        <option value="Food" class="text-slate-800">Food</option>
+                        <option value="Transport" class="text-slate-800">Transport</option>
+                        <option value="Fun" class="text-slate-800">Fun</option>
+                    </select>
+                </div>
+
+                <div class="mt-5">
+                    <input id="add_transaction" type="submit" value="Add Transaction" class="hover:bg-emerald-600 w-full bg-emerald-500 rounded-md p-2 font-bold text-white">
+                </div>
+            </form>
+        </div>
+
+        <!-- CHARTS -->
+        <div class="grid grid-cols-2 gap-4 mt-5">
+            <div class="rounded-md shadow-md p-4 max-h-[700px] overflow-auto bg-slate-700">
+                <p class="text-left font-bold text-lg text-slate-100">Transactions</p>
+                <table id="transaction_table" class="table-auto w-full">
+                    <tbody id="transaction_body">
+                        
+                    </tbody>
+                </table>
+            </div>
+
+            <div class="rounded-md shadow-md p-4 bg-slate-700">
+                <p class="text-left font-bold text-lg text-slate-100">Spending by Category</p>
+                <div>
+                    <canvas id="myChart" class="mt-5"></canvas>
+                </div>
+            </div>
+        </div>
+    </div>
+</body>
+<script src="js/Project-js.js"></script>
+</html>
