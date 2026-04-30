@@ -1,0 +1,61 @@
+/* ===== DARK / LIGHT MODE ===== */
+
+/* Light mode overrides when <body> has class "light-mode" */
+body.light-mode {
+    background-color: #f1f5f9 !important; /* slate-100 */
+}
+
+/* Header / title */
+body.light-mode #app_title {
+    background-color: #e2e8f0 !important; /* slate-200 */
+    color: #1e293b !important;            /* slate-800 */
+}
+
+/* Toggle button */
+body.light-mode #theme_toggle {
+    background-color: #cbd5e1 !important; /* slate-300 */
+    color: #1e293b !important;
+}
+body.light-mode #theme_toggle:hover {
+    background-color: #94a3b8 !important; /* slate-400 */
+}
+
+/* Cards / sections with bg-slate-700 */
+body.light-mode .bg-slate-700 {
+    background-color: #ffffff !important;
+    box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+}
+
+/* Text colours */
+body.light-mode .text-slate-100,
+body.light-mode .text-slate-200 {
+    color: #1e293b !important; /* slate-800 */
+}
+
+body.light-mode .text-white {
+    color: #1e293b !important;
+}
+
+/* Inputs & selects */
+body.light-mode input:not([type="submit"]),
+body.light-mode select {
+    background-color: #f8fafc !important;
+    color: #1e293b !important;
+    border: 1px solid #cbd5e1;
+}
+
+/* Category badge in transaction rows */
+body.light-mode .bg-slate-500 {
+    background-color: #e2e8f0 !important;
+    color: #334155 !important;
+}
+
+/* Smooth transitions on all affected elements */
+body,
+#app_title,
+#theme_toggle,
+.bg-slate-700,
+input,
+select {
+    transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
+}
