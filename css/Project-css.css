@@ -50,6 +50,17 @@ body.light-mode .bg-slate-500 {
     color: #334155 !important;
 }
 
+/* Category table rows */
+body.light-mode #category_table_body tr {
+    border-color: #cbd5e1 !important;
+}
+body.light-mode #category_table_body td {
+    color: #1e293b !important;
+}
+body.light-mode #category_empty_msg {
+    color: #64748b !important;
+}
+
 /* Smooth transitions on all affected elements */
 body,
 #app_title,

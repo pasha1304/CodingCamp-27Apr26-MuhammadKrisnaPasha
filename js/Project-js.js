@@ -36,6 +36,7 @@ function updateToggleUI(isLight) {
 
 document.addEventListener("DOMContentLoaded", renderData);
 document.addEventListener("DOMContentLoaded", renderCategory);
+// document.addEventListener("DOMContentLoaded", renderCategoryTable);
 
 let myChart;
 
@@ -45,6 +46,15 @@ function deleteList(index) {
 
     localStorage.setItem("transactions", JSON.stringify(data));
     renderData();
+}
+
+function deleteCategory(index) {
+    const data = getCategory();
+    data.splice(index, 1);
+
+    localStorage.setItem("categories", JSON.stringify(data));
+    renderCategory();
+    renderCategoryTable();
 }
 
 document.getElementById("transaction_form").addEventListener("submit", function(e) {
@@ -63,9 +73,106 @@ document.getElementById("transaction_form").addEventListener("submit", function(
     this.reset();
 });
 
+function getData() {
+    return JSON.parse(localStorage.getItem("transactions")) || [];
+}
+
+function getCategory() {
+    return JSON.parse(localStorage.getItem("categories")) || [];
+}
+
+function renderCategoryTable() {
+    const cat_body = document.getElementById("cat_table_body");
+    cat_body.innerHTML  = "";
+
+    const data = getCategory();
+
+    data.forEach(function(item, index){
+        const row = document.createElement("tr");
+        row.className = "border-t border-slate-700";
+        row.innerHTML = `
+            <td class="p-3">${item.category}</td> 
+            <td class="p-3 text-center">
+                    <button onclick="deleteCategory(${index})" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-white">
+                        Delete
+                    </button>
+            </td>
+        `;  
+
+        cat_body.appendChild(row);
+    });
+}
+
+function renderCategory() {
+    const select     = document.getElementById("category_select");
+    const sortSelect = document.getElementById("sort_category");
+    const data       = getCategory();
+
+    select.innerHTML = "";
+    data.forEach(function(item) {
+        const option = document.createElement("option");
+        option.value       = item.category;
+        option.textContent = item.category;
+        select.appendChild(option);
+    });
+
+    const currentSort = sortSelect.value;
+    sortSelect.innerHTML = '<option value="all">All Categories</option>';
+    data.forEach(function(item) {
+        const option = document.createElement("option");
+        option.value       = item.category;
+        option.textContent = item.category;
+        sortSelect.appendChild(option);
+    });
+
+    if ([...sortSelect.options].some(function(o) { return o.value === currentSort; })) {
+        sortSelect.value = currentSort;
+    }
+}
+
+function renderData() {
+    const tbody     = document.getElementById("transaction_body");
+    tbody.innerHTML = "";
+
+    const data      = getData();
+    const filterCat = document.getElementById("sort_category") 
+                        ? document.getElementById("sort_category").value 
+                        : "all";
+
+    let total = 0;
+
+    data.forEach(function(item, index) {
+        total += parseFloat(item.amount) || 0;
+
+        if (filterCat !== "all" && item.category !== filterCat) return;
+
+        const row = document.createElement("tr");
+        row.className = "shadow-md rounded-md";
+        row.innerHTML =
+            '<td class="p-4 font-bold text-base text-slate-200">' +
+                item.item_name + '<br>' +
+                '<p class="font-bold text-white mt-1">' + item.amount + '</p><br>' +
+                '<p class="bg-slate-500 rounded-md p-2 text-slate-100">' + item.category + '</p>' +
+            '</td>' +
+            '<td class="p-4 text-right">' +
+                '<button onclick="deleteList(' + index + ')" ' +
+                    'class="hover:bg-pink-800 p-4 bg-pink-700 rounded-md font-bold text-white">' +
+                    'Delete' +
+                '</button>' +
+            '</td>';
+
+        tbody.appendChild(row);
+    });
+
+    document.getElementById("total_balance").innerText = "$" + total;
+
+    startCharts();
+}
+
 function showAddCategory() {
     const container = document.getElementById("new_category_form");
     let form = document.getElementById("add_category_form");
+    let cat_list = document.getElementById("cat_list");
 
     if (!form) {
         const insert = `
@@ -91,8 +198,27 @@ function showAddCategory() {
                     </div>
                 </div>
             </div>
+
+            <div id="cat_list" class="shadow-md rounded-md bg-slate-700 p-2 mt-5 max-h-[200px] overflow-auto">
+                <table id="cat_table" class="w-full border border-slate-700 rounded-md text-slate-200">
+                    <thead class="bg-slate-800">
+                        <tr>
+                            <th class="p-3 text-left">Category</th>
+                            <th class="p-3 text-center">Action</th>
+                        </tr>
+                    </thead>
+
+                    <tbody id="cat_table_body" class="bg-slate-800">
+                        <tr class="border-t border-slate-700 transition">
+
+                        </tr>
+                    </tbody>
+                </table>
+            </div>
         `;
         container.innerHTML += insert;
+
+        renderCategoryTable();
 
         document.getElementById("add_category_btn").addEventListener("click", function(e) {
             e.preventDefault();
@@ -108,10 +234,12 @@ function showAddCategory() {
             localStorage.setItem("categories", JSON.stringify(data));
 
             renderCategory();
+            renderCategoryTable();
             input.value = "";
         });
     } else {
         form.classList.remove("hidden");
+        cat_list.classList.remove("hidden");
     }
 }
 
@@ -120,84 +248,11 @@ function hideAddCategory() {
     if (form) {
         form.classList.add("hidden");
     }
-}
 
-function getData() {
-    return JSON.parse(localStorage.getItem("transactions")) || [];
-}
-
-function getCategory() {
-    return JSON.parse(localStorage.getItem("categories")) || [];
-}
-
-function renderCategory() {
-    const select     = document.getElementById("category_select");
-    const sortSelect = document.getElementById("sort_category");
-    const data       = getCategory();
-
-    // Populate transaction form select
-    select.innerHTML = "";
-    data.forEach(function(item) {
-        const option = document.createElement("option");
-        option.value       = item.category;
-        option.textContent = item.category;
-        select.appendChild(option);
-    });
-
-    // Populate sort dropdown — keep current selection if still valid
-    const currentSort = sortSelect.value;
-    sortSelect.innerHTML = '<option value="all">All Categories</option>';
-    data.forEach(function(item) {
-        const option = document.createElement("option");
-        option.value       = item.category;
-        option.textContent = item.category;
-        sortSelect.appendChild(option);
-    });
-
-    // Restore previous selection if it still exists
-    if ([...sortSelect.options].some(function(o) { return o.value === currentSort; })) {
-        sortSelect.value = currentSort;
+    const cat_list = document.getElementById("cat_list");
+    if (cat_list) {
+        cat_list.classList.add("hidden");
     }
-}
-
-function renderData() {
-    const tbody     = document.getElementById("transaction_body");
-    tbody.innerHTML = "";
-
-    const data      = getData();
-    const filterCat = document.getElementById("sort_category") 
-                        ? document.getElementById("sort_category").value 
-                        : "all";
-
-    let total = 0;
-
-    data.forEach(function(item, index) {
-        total += parseFloat(item.amount) || 0;
-
-        // Skip rows that don't match the selected category
-        if (filterCat !== "all" && item.category !== filterCat) return;
-
-        const row = document.createElement("tr");
-        row.className = "shadow-md rounded-md";
-        row.innerHTML =
-            '<td class="p-4 font-bold text-base text-slate-200">' +
-                item.item_name + '<br>' +
-                '<p class="font-bold text-white mt-1">' + item.amount + '</p><br>' +
-                '<p class="bg-slate-500 rounded-md p-2 text-slate-100">' + item.category + '</p>' +
-            '</td>' +
-            '<td class="p-4 text-right">' +
-                '<button onclick="deleteList(' + index + ')" ' +
-                    'class="hover:bg-pink-800 p-4 bg-pink-700 rounded-md font-bold text-white">' +
-                    'Delete' +
-                '</button>' +
-            '</td>';
-
-        tbody.appendChild(row);
-    });
-
-    document.getElementById("total_balance").innerText = "$" + total;
-
-    startCharts();
 }
 
 function startCharts() {
@@ -254,7 +309,6 @@ function startCharts() {
     });
 }
 
-// Generate an array of distinct HSL colours
 function generateColors(count) {
     const colors = [];
     for (let i = 0; i < count; i++) {
