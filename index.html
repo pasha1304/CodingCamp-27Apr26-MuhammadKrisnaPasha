@@ -9,7 +9,8 @@
     <link rel="stylesheet" href="css/Project-css.css">
 </head>
 <body class="font-sans bg-slate-800 transition-colors duration-300">
-    <div id="balance" class="grid grid-cols-1 gap-4 p-4 px-50">
+    <div id="balance" class="grid grid-cols-1 gap-4 p-4">
+    <!-- <div id="balance" class="grid grid-cols-1 gap-4 p-4 px-50"> -->
         
         <!-- EXPENSE -->
         <section class="flex">
@@ -70,7 +71,7 @@
 
         <!-- CHARTS -->
         <section class="grid grid-cols-2 gap-4 mt-5">
-            <div class="rounded-md shadow-md p-4 max-h-[700px] overflow-auto bg-slate-700">
+            <div class="rounded-md shadow-md p-4 max-h-[900px] overflow-auto bg-slate-700">
                 <div class="flex items-center justify-between mb-3">
                     <p class="text-left font-bold text-lg text-slate-100">Transactions</p>
                     <select id="sort_category" onchange="renderData()" 

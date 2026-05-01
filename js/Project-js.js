@@ -36,7 +36,6 @@ function updateToggleUI(isLight) {
 
 document.addEventListener("DOMContentLoaded", renderData);
 document.addEventListener("DOMContentLoaded", renderCategory);
-// document.addEventListener("DOMContentLoaded", renderCategoryTable);
 
 let myChart;
 
@@ -93,7 +92,7 @@ function renderCategoryTable() {
         row.innerHTML = `
             <td class="p-3">${item.category}</td> 
             <td class="p-3 text-center">
-                    <button onclick="deleteCategory(${index})" class="bg-red-500 hover:bg-red-600 px-3 py-1 rounded text-white">
+                    <button onclick="deleteCategory(${index})" class="hover:bg-pink-800 bg-pink-700 px-3 py-1 rounded text-white">
                         Delete
                     </button>
             </td>
@@ -187,7 +186,7 @@ function showAddCategory() {
                 <div class="mt-5 grid grid-cols-2 gap-4">
                     <div>
                         <button id="add_category_btn" class="hover:bg-emerald-600 w-full bg-emerald-500 rounded-md p-2 font-bold text-white">
-                            Add Category
+                            Submit
                         </button>
                     </div>
 
@@ -199,7 +198,7 @@ function showAddCategory() {
                 </div>
             </div>
 
-            <div id="cat_list" class="shadow-md rounded-md bg-slate-700 p-2 mt-5 max-h-[200px] overflow-auto">
+            <div id="cat_list" class="shadow-md rounded-md bg-slate-700 p-2 mt-5 max-h-[205px] overflow-auto">
                 <table id="cat_table" class="w-full border border-slate-700 rounded-md text-slate-200">
                     <thead class="bg-slate-800">
                         <tr>
