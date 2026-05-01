@@ -10,6 +10,10 @@ document.addEventListener("DOMContentLoaded", function() {
         document.body.classList.add("light-mode");
         updateToggleUI(true);
     }
+
+    var x = 10;
+    var y = 20;
+    console.log(x + y);
 });
 
 function toggleTheme() {

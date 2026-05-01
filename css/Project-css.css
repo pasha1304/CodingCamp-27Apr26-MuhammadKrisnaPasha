@@ -1,72 +1,104 @@
-/* ===== DARK / LIGHT MODE ===== */
+/* ============================================================
+   DARK / LIGHT MODE
+   Light mode aktif saat <body> punya class "light-mode"
+   ============================================================ */
 
-/* Light mode overrides when <body> has class "light-mode" */
+/* ── Base background ─────────────────────────────────────── */
 body.light-mode {
-    background-color: #f1f5f9 !important; /* slate-100 */
+    background-color: #dde3ec !important; /* abu-biru hangat */
 }
 
-/* Header / title */
+/* ── Header / app title ──────────────────────────────────── */
 body.light-mode #app_title {
-    background-color: #e2e8f0 !important; /* slate-200 */
-    color: #1e293b !important;            /* slate-800 */
+    background-color: #c8d0dc !important;
+    color: #1e293b !important;
 }
 
-/* Toggle button */
+/* ── Theme toggle button ─────────────────────────────────── */
 body.light-mode #theme_toggle {
-    background-color: #cbd5e1 !important; /* slate-300 */
+    background-color: #b8c2cf !important;
     color: #1e293b !important;
 }
 body.light-mode #theme_toggle:hover {
-    background-color: #94a3b8 !important; /* slate-400 */
+    background-color: #a4b0be !important;
 }
 
-/* Cards / sections with bg-slate-700 */
+/* ── Cards (semua elemen bg-slate-700) ───────────────────── */
 body.light-mode .bg-slate-700 {
-    background-color: #ffffff !important;
-    box-shadow: 0 1px 6px rgba(0,0,0,0.12);
+    background-color: #eaecf2 !important;
+    box-shadow: 0 1px 6px rgba(0, 0, 0, 0.10);
 }
 
-/* Text colours */
+/* ── Tabel kategori: thead & tbody pakai bg-slate-800 ────── */
+body.light-mode #cat_table thead,
+body.light-mode #cat_table tbody {
+    background-color: #e2e6ee !important;
+}
+
+/* ── Border antar baris tabel kategori ───────────────────── */
+body.light-mode #cat_table_body tr {
+    border-color: #c8cdd8 !important;
+}
+
+/* ── Teks umum ───────────────────────────────────────────── */
 body.light-mode .text-slate-100,
-body.light-mode .text-slate-200 {
-    color: #1e293b !important; /* slate-800 */
+body.light-mode .text-slate-200,
+body.light-mode .text-slate-300 {
+    color: #1e293b !important;
 }
 
 body.light-mode .text-white {
     color: #1e293b !important;
 }
 
-/* Inputs & selects */
-body.light-mode input:not([type="submit"]),
-body.light-mode select {
-    background-color: #f8fafc !important;
-    color: #1e293b !important;
-    border: 1px solid #cbd5e1;
+body.light-mode .text-slate-400 {
+    color: #64748b !important;
 }
 
-/* Category badge in transaction rows */
+/* ── Inputs & selects ────────────────────────────────────── */
+body.light-mode input:not([type="submit"]):not([type="hidden"]),
+body.light-mode select {
+    background-color: #dde3ec !important;
+    color: #1e293b !important;
+    border: 1px solid #b8c2cf !important;
+}
+
+/* ── Category badge di baris transaksi ───────────────────── */
 body.light-mode .bg-slate-500 {
-    background-color: #e2e8f0 !important;
+    background-color: #c8d0dc !important;
     color: #334155 !important;
 }
 
-/* Category table rows */
-body.light-mode #category_table_body tr {
-    border-color: #cbd5e1 !important;
-}
-body.light-mode #category_table_body td {
+/* ── bg-slate-800 (thead tabel kategori) ─────────────────── */
+body.light-mode .bg-slate-800 {
+    background-color: #d4dae4 !important;
     color: #1e293b !important;
 }
+
+/* ── Tombol aksi: warna teks tetap putih di kedua mode ───── */
+body.light-mode .bg-emerald-500,
+body.light-mode .bg-pink-700,
+body.light-mode .bg-blue-600 {
+    color: #ffffff !important;
+}
+
+/* ── Pesan kosong kategori ───────────────────────────────── */
 body.light-mode #category_empty_msg {
     color: #64748b !important;
 }
 
-/* Smooth transitions on all affected elements */
+/* ============================================================
+   TRANSISI HALUS
+   ============================================================ */
 body,
 #app_title,
 #theme_toggle,
 .bg-slate-700,
+.bg-slate-800,
 input,
-select {
+select,
+table,
+th,
+td {
     transition: background-color 0.3s ease, color 0.3s ease, border-color 0.3s ease;
 }
